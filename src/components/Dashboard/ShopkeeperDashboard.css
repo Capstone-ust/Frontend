@@ -5,29 +5,28 @@
 }
 
 .shopkeeper-dashboard {
-  padding: 1.5rem;
-  width: 100%;
+  padding: 2rem;
+  background: #ffffff;
   min-height: 100vh;
-  background: #f8fafc;
 }
 
 /* Header Section */
 .dashboard-header {
-  background: white;
+  background: #292929;
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-bottom: 1.5rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: #ffffff;
 }
 
 .welcome-section h1 {
-  font-size: 1.25rem;
-  color: #1e293b;
+  color: #ffffff;
   margin: 0;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .store-info {
@@ -42,33 +41,17 @@
 }
 
 .action-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1rem;
-  border-radius: 6px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  font-size: 0.875rem;
+  background: #333333;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.action-btn.billing {
-  background: #10b981;
-  color: white;
-}
-
-.action-btn.billing:hover {
-  background: #059669;
-}
-
-.action-btn.inventory {
-  background: #6366f1;
-  color: white;
-}
-
-.action-btn.inventory:hover {
-  background: #4f46e5;
+.action-btn:hover {
+  background: #404040;
 }
 
 /* Date Filter */
@@ -109,19 +92,23 @@
 /* Stats Grid */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .stat-card {
-  background: white;
-  padding: 1.25rem;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: #292929;
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  background: #333333;
+  transform: translateY(-2px);
 }
 
 .stat-icon {
@@ -132,39 +119,58 @@
   align-items: center;
   justify-content: center;
   font-size: 1.25rem;
+  background: #333333;
+  color: #ffffff;
+  transition: all 0.3s ease;
 }
 
+/* Updated professional monochrome icons */
 .stat-card.products .stat-icon {
-  background: #eef2ff;
-  color: #6366f1;
+  background: #333333;
+}
+.stat-card.products .stat-icon i::before {
+  content: "\f466"; /* fa-box */
 }
 
 .stat-card.sales .stat-icon {
-  background: #ecfdf5;
-  color: #10b981;
+  background: #333333;
+}
+.stat-card.sales .stat-icon i::before {
+  content: "\f54e"; /* fa-store */
 }
 
 .stat-card.revenue .stat-icon {
-  background: #fef3c7;
-  color: #f59e0b;
+  background: #333333;
+}
+.stat-card.revenue .stat-icon i::before {
+  content: "\f51e"; /* fa-coins */
 }
 
 .stat-card.low-stock .stat-icon {
-  background: #fee2e2;
-  color: #ef4444;
+  background: #333333;
+}
+.stat-card.low-stock .stat-icon i::before {
+  content: "\f06a"; /* fa-exclamation-circle */
+}
+
+.stat-icon:hover {
+  background: #404040;
 }
 
 .stat-info h3 {
   font-size: 0.875rem;
-  color: #64748b;
+  color: #e0e0e0;
   margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .stat-info p {
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   font-weight: 600;
-  color: #1e293b;
+  color: #ffffff;
   margin: 0.25rem 0 0 0;
+  letter-spacing: 0.5px;
 }
 
 /* Dashboard Content */
@@ -403,4 +409,65 @@
   .order-filter, .search-input {
     width: 100%;
   }
+}
+
+.dashboard-card {
+  background: #292929;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #ffffff;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-box {
+  background: #292929;
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #ffffff;
+}
+
+.chart-container {
+  background: #292929;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.recent-orders {
+  background: #292929;
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #ffffff;
+}
+
+.table-header {
+  background: #333333;
+  color: #ffffff;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.table-row {
+  border-bottom: 1px solid #404040;
+}
+
+.table-row:hover {
+  background: #333333;
+}
+
+.data-table {
+  background: #292929;
+  border-radius: 12px;
+  padding: 1.5rem;
+  color: #ffffff;
 } 

@@ -1,117 +1,248 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 .stores-page {
-  padding: 20px;
+  padding: 2rem;
+  background: transparent;
 }
 
-.stores-page h1 {
-  margin-bottom: 24px;
-  color: #1a1a1a;
+.page-header {
+  background: #292929;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
 }
 
-.stores-grid {
+.page-header h1 {
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 1.5rem;
 }
 
 .store-card {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: #292929;
+  border-radius: 12px;
+  padding: 2rem;
 }
 
-.store-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.store-header h3 {
+.store-name {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 500;
   margin: 0;
-  color: #1a1a1a;
 }
 
-.status {
-  padding: 4px 12px;
+.store-id {
+  color: #ffffff;
+  opacity: 0.7;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.info-label {
+  color: #ffffff;
+  opacity: 0.7;
+}
+
+.info-value {
+  color: #ffffff;
+}
+
+.store-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.action-button {
+  background: #333333;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.action-button:hover {
+  background: #404040;
+}
+
+.view-btn {
+  background: #333333;
+  color: #ffffff;
+}
+
+.view-btn:hover {
+  background: #404040;
+}
+
+.edit-btn {
+  background: #333333;
+  color: #ffffff;
+}
+
+.edit-btn:hover {
+  background: #404040;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 500;
 }
 
-.status.active {
-  background-color: #dcfce7;
-  color: #16a34a;
+.status-active {
+  background: #333333;
+  color: #4CAF50;
 }
 
-.status.inactive {
-  background-color: #fee2e2;
-  color: #dc2626;
+.status-inactive {
+  background: #333333;
+  color: #F44336;
 }
 
-.status.pending {
-  background-color: #fef3c7;
-  color: #d97706;
+.page-header .material-icons {
+  font-size: 2rem;
+  color: #ffffff;
 }
 
-.store-info {
-  margin-bottom: 20px;
-}
-
-.store-info p {
-  margin: 8px 0;
-  color: #4b5563;
-}
-
-.store-info strong {
-  color: #1a1a1a;
-}
-
-.store-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.store-actions button {
-  flex: 1;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.btn-primary {
-  background-color: #3b82f6;
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: #2563eb;
-}
-
-.btn-primary:disabled {
-  background-color: #93c5fd;
-  cursor: not-allowed;
-}
-
-.btn-danger {
-  background-color: #ef4444;
-  color: white;
-}
-
-.btn-danger:hover {
-  background-color: #dc2626;
-}
-
-.btn-danger:disabled {
-  background-color: #fca5a5;
-  cursor: not-allowed;
+.close-icon .material-icons {
+  font-size: 1.5rem;
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
-  .stores-grid {
+  .stores-page {
+    padding: 1rem;
+  }
+  
+  .cards-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #292929;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  padding: 2rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-header h2 {
+  color: #ffffff;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  background: #333333;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cancel-button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.save-button {
+  background: #404040;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.save-button:hover {
+  background: #4a4a4a;
+}
+
+.cancel-button:hover {
+  border-color: rgba(255, 255, 255, 0.4);
 } 

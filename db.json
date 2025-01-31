@@ -39,6 +39,41 @@
       "storeId": "STORE002",
       "name": "New Shop Owner",
       "createdAt": "2024-03-15T10:00:00.000Z"
+    },
+    {
+      "id": "1738230765214",
+      "username": "admin",
+      "password": "admin123",
+      "role": "SHOPKEEPER",
+      "status": "PENDING"
+    },
+    {
+      "id": "1738231577938",
+      "username": "admin",
+      "password": "admin123",
+      "role": "SHOPKEEPER",
+      "status": "PENDING"
+    },
+    {
+      "id": "1738232270997",
+      "username": "admin",
+      "password": "admin123",
+      "role": "SHOPKEEPER",
+      "status": "PENDING"
+    },
+    {
+      "id": "1738235388308",
+      "username": "admin",
+      "password": "admin123",
+      "role": "SHOPKEEPER",
+      "status": "PENDING"
+    },
+    {
+      "id": "1738235675374",
+      "username": "admin",
+      "password": "admin123",
+      "role": "SHOPKEEPER",
+      "status": "PENDING"
     }
   ],
   "stores": [
@@ -46,7 +81,9 @@
       "id": "STORE001",
       "name": "Store One",
       "location": "Location 1",
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "region": "east",
+      "address": "aa"
     },
     {
       "id": "STORE002",
@@ -85,16 +122,6 @@
   ],
   "products": [
     {
-      "id": "1",
-      "name": "Organic Bananas",
-      "brand": "Fresh Farms",
-      "category": "Fruits",
-      "price": 2.99,
-      "stock": 150,
-      "storeId": "store1",
-      "status": "ACTIVE"
-    },
-    {
       "id": "2",
       "name": "Whole Milk",
       "brand": "Dairy Best",
@@ -121,16 +148,6 @@
       "category": "Meat",
       "price": 8.99,
       "stock": 45,
-      "storeId": "store2",
-      "status": "ACTIVE"
-    },
-    {
-      "id": "5",
-      "name": "Cola",
-      "brand": "Refresho",
-      "category": "Beverages",
-      "price": 1.99,
-      "stock": 200,
       "storeId": "store2",
       "status": "ACTIVE"
     },
@@ -257,7 +274,7 @@
   "inventory": [
     {
       "id": "1",
-      "productId": "1",
+      "productId": null,
       "storeId": "store1",
       "name": "Organic Bananas",
       "brand": "Fresh Farms",
@@ -293,7 +310,7 @@
     },
     {
       "id": "4",
-      "productId": "5",
+      "productId": null,
       "storeId": "store2",
       "name": "Cola",
       "brand": "Refresho",
@@ -305,7 +322,7 @@
     },
     {
       "id": "1738069707719",
-      "productId": "1",
+      "productId": null,
       "storeId": "STORE001",
       "name": "Organic Bananas",
       "brand": "Fresh Farms",
@@ -353,7 +370,7 @@
     },
     {
       "id": "1738122050589",
-      "productId": "1",
+      "productId": null,
       "storeId": "STORE001",
       "name": "Organic Bananas",
       "brand": "Fresh Farms",
@@ -377,7 +394,7 @@
     },
     {
       "id": "1738212076426",
-      "productId": "5",
+      "productId": null,
       "storeId": "STORE001",
       "name": "Cola",
       "brand": "Refresho",

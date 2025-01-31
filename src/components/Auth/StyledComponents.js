@@ -7,18 +7,19 @@ export const Container = styled.div`
   min-height: 100vh;
   width: 100%;
   padding: 20px;
-  background: linear-gradient(135deg, #f6f8ff 0%, #f0f4ff 100%);
+  background: #ffffff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 `;
 
 export const MainContainer = styled.div`
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
   width: 100%;
   max-width: 768px;
-  min-height: 480px;
+  min-height: 580px;
 `;
 
 export const SignUpContainer = styled.div`
@@ -30,6 +31,7 @@ export const SignUpContainer = styled.div`
   width: 50%;
   opacity: 0;
   z-index: 1;
+  background-color: ${props => props.signingIn ? '#292929' : '#ffffff'};
   ${props => props.signingIn !== true ? `
     transform: translateX(100%);
     opacity: 1;
@@ -45,11 +47,11 @@ export const SignInContainer = styled.div`
   left: 0;
   width: 50%;
   z-index: 2;
+  background-color: ${props => props.signingIn ? '#ffffff' : '#292929'};
   ${props => (props.signingIn !== true ? `transform: translateX(100%);` : null)}
 `;
 
 export const Form = styled.form`
-  background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,49 +59,67 @@ export const Form = styled.form`
   padding: 0 50px;
   height: 100%;
   text-align: center;
+  background-color: inherit;
 `;
 
 export const Title = styled.h1`
-  font-weight: bold;
+  font-weight: 500;
   margin: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  color: ${props => props.white ? '#ffffff' : '#292929'};
 `;
 
 export const Input = styled.input`
-  background-color: #eee;
-  border: none;
+  background-color: ${props => props.white ? '#2d2d2d' : '#f5f5f5'};
+  border: 1px solid ${props => props.white ? '#404040' : '#e0e0e0'};
   padding: 12px 15px;
   margin: 8px 0;
   width: 100%;
-  border-radius: 4px;
-`;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: ${props => props.white ? '#ffffff' : '#292929'};
+  transition: all 0.3s ease;
 
-export const Button = styled.button`
-  border-radius: 20px;
-  border: 1px solid #ff4b2b;
-  background-color: #ff4b2b;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 12px 45px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: transform 80ms ease-in;
-  margin-top: 1rem;
-  cursor: pointer;
-
-  &:active {
-    transform: scale(0.95);
+  &::placeholder {
+    color: ${props => props.white ? '#888888' : '#666666'};
   }
 
   &:focus {
     outline: none;
+    border-color: ${props => props.white ? '#666666' : '#292929'};
+    box-shadow: 0 0 0 2px ${props => props.white ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
+  }
+`;
+
+export const Button = styled.button`
+  border-radius: 8px;
+  border: none;
+  background-color: ${props => props.white ? '#ffffff' : '#292929'};
+  color: ${props => props.white ? '#292929' : '#ffffff'};
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${props => props.white ? '#f5f5f5' : '#333333'};
+    transform: translateY(-1px);
   }
 `;
 
 export const GhostButton = styled(Button)`
   background-color: transparent;
-  border-color: #ffffff;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+  }
 `;
 
 export const OverlayContainer = styled.div`
@@ -115,12 +135,7 @@ export const OverlayContainer = styled.div`
 `;
 
 export const Overlay = styled.div`
-  background: #ff416c;
-  background: -webkit-linear-gradient(to right, #ff4b2b, #ff416c);
-  background: linear-gradient(to right, #ff4b2b, #ff416c);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 0 0;
+  background: #292929;
   color: #ffffff;
   position: relative;
   left: -100%;
@@ -163,26 +178,37 @@ export const Paragraph = styled.p`
   line-height: 20px;
   letter-spacing: 0.5px;
   margin: 20px 0 30px;
+  color: ${props => props.white ? '#ffffff' : '#666666'};
 `;
 
 export const Select = styled.select`
-  background-color: #eee;
-  border: none;
+  background-color: ${props => props.white ? '#2d2d2d' : '#f5f5f5'};
+  border: 1px solid ${props => props.white ? '#404040' : '#e0e0e0'};
   padding: 12px 15px;
   margin: 8px 0;
   width: 100%;
+  border-radius: 8px;
   font-size: 0.9rem;
-  border-radius: 4px;
+  color: ${props => props.white ? '#ffffff' : '#292929'};
   transition: all 0.3s ease;
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    border-color: ${props => props.white ? '#666666' : '#292929'};
+    box-shadow: 0 0 0 2px ${props => props.white ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
   }
 
   option {
-    color: #333;
-    background: white;
+    color: #292929;
+    background: #ffffff;
     padding: 8px;
   }
-`; 
+`;
+
+export const OverlayText = styled.p`
+  color: #ffffff;
+  font-size: 14px;
+  margin: 20px 0;
+  letter-spacing: 0.5px;
+  line-height: 20px;
+`;

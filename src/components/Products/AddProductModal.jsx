@@ -1,39 +1,39 @@
-import { useState } from 'react'
-import './Modal.css'
-import { productService } from '../../services/api'
-import { useAuth } from '../../contexts/AuthContext'
+import { useState } from "react";
+import "./Modal.css";
+import { productService } from "../../services/api";
+import { useAuth } from "../../contexts/AuthContext";
 
 function AddProductModal({ onClose, onProductAdded }) {
-  const { user } = useAuth()
+  const { user } = useAuth();
   const [product, setProduct] = useState({
-    name: '',
-    brand: '',
-    category: '',
-    price: '',
-    description: '',
-    storeId: user?.storeId || '',
-  })
+    name: "",
+    brand: "",
+    category: "",
+    price: "",
+    description: "",
+    storeId: user?.storeId || "",
+  });
 
   const categories = [
-    'Fruits',
-    'Vegetables',
-    'Dairy',
-    'Bakery',
-    'Beverages',
-    'Snacks',
-    'Meat',
-    'Others'
-  ]
+    "Fruits",
+    "Vegetables",
+    "Dairy",
+    "Bakery",
+    "Beverages",
+    "Snacks",
+    "Meat",
+    "Others",
+  ];
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      await onProductAdded(product)
-      onClose()
+      await onProductAdded(product);
+      onClose();
     } catch (error) {
-      console.error('Error adding product:', error)
+      console.error("Error adding product:", error);
     }
-  }
+  };
 
   return (
     <div className="modal-overlay">
@@ -54,7 +54,9 @@ function AddProductModal({ onClose, onProductAdded }) {
                 id="name"
                 name="name"
                 value={product.name}
-                onChange={(e) => setProduct({ ...product, name: e.target.value })}
+                onChange={(e) =>
+                  setProduct({ ...product, name: e.target.value })
+                }
                 required
                 className="form-input"
                 placeholder="Enter product name"
@@ -68,7 +70,9 @@ function AddProductModal({ onClose, onProductAdded }) {
                 id="brand"
                 name="brand"
                 value={product.brand}
-                onChange={(e) => setProduct({ ...product, brand: e.target.value })}
+                onChange={(e) =>
+                  setProduct({ ...product, brand: e.target.value })
+                }
                 required
                 className="form-input"
                 placeholder="Enter brand name"
@@ -81,13 +85,17 @@ function AddProductModal({ onClose, onProductAdded }) {
                 id="category"
                 name="category"
                 value={product.category}
-                onChange={(e) => setProduct({ ...product, category: e.target.value })}
+                onChange={(e) =>
+                  setProduct({ ...product, category: e.target.value })
+                }
                 required
                 className="form-select"
               >
                 <option value="">Select category</option>
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
                 ))}
               </select>
             </div>
@@ -99,7 +107,9 @@ function AddProductModal({ onClose, onProductAdded }) {
                 id="price"
                 name="price"
                 value={product.price}
-                onChange={(e) => setProduct({ ...product, price: e.target.value })}
+                onChange={(e) =>
+                  setProduct({ ...product, price: e.target.value })
+                }
                 required
                 min="0"
                 step="0.01"
@@ -115,7 +125,9 @@ function AddProductModal({ onClose, onProductAdded }) {
               id="description"
               name="description"
               value={product.description}
-              onChange={(e) => setProduct({ ...product, description: e.target.value })}
+              onChange={(e) =>
+                setProduct({ ...product, description: e.target.value })
+              }
               className="form-textarea"
               rows="4"
               placeholder="Enter product description"
@@ -123,7 +135,11 @@ function AddProductModal({ onClose, onProductAdded }) {
           </div>
 
           <div className="modal-actions">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
               Cancel
             </button>
             <button type="submit" className="btn btn-primary">
@@ -133,7 +149,7 @@ function AddProductModal({ onClose, onProductAdded }) {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default AddProductModal 
+export default AddProductModal;

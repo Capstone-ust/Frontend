@@ -110,7 +110,10 @@ const ProductsPage = () => {
     <div className="page-container">
       <div className="page-header">
         <h1>Products</h1>
-        <button className="btn btn-primary" onClick={() => setShowAddModal(true)}>
+        <button
+          className="btn btn-primary"
+          onClick={() => setShowAddModal(true)}
+        >
           <i className="fas fa-plus"></i> Add Product
         </button>
       </div>
@@ -123,15 +126,27 @@ const ProductsPage = () => {
               <span className="badge badge-success">{product.status}</span>
             </div>
             <div className="card-content">
-              <p><strong>Brand:</strong> {product.brand}</p>
-              <p><strong>Price:</strong> ${product.price}</p>
-              <p><strong>Stock:</strong> {product.stock}</p>
+              <p>
+                <strong>Brand:</strong> {product.brand}
+              </p>
+              <p>
+                <strong>Price:</strong> ${product.price}
+              </p>
+              <p>
+                <strong>Stock:</strong> {product.stock}
+              </p>
             </div>
             <div className="card-actions">
-              <button className="btn btn-secondary" onClick={() => handleEdit(product)}>
+              <button
+                className="btn btn-secondary"
+                onClick={() => handleEdit(product)}
+              >
                 <i className="fas fa-edit"></i> Edit
               </button>
-              <button className="btn btn-primary" onClick={() => handleView(product)}>
+              <button
+                className="btn btn-primary"
+                onClick={() => handleView(product)}
+              >
                 <i className="fas fa-eye"></i> View
               </button>
             </div>

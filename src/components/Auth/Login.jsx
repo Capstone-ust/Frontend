@@ -16,35 +16,33 @@ import {
   LeftOverlayPanel,
   RightOverlayPanel,
   Select,
+  OverlayText,
 } from "./StyledComponents";
 import "./Auth.css";
 import { authService } from "../../services/api";
 
 const Login = () => {
-  const [signIn, setSignIn] = useState(true);
-  const [formData, setFormData] = useState({
+  const [isSignIn, setIsSignIn] = useState(true);
+  const [loginData, setLoginData] = useState({
     username: "",
     password: "",
-    role: "ADMIN",
+    role: "SHOPKEEPER",
+  });
+  const [signupData, setSignupData] = useState({
+    username: "",
+    password: "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth();
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const { login, signup } = useAuth();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
       setError("");
       setLoading(true);
-      const user = await login(formData);
+      const user = await login(loginData);
       navigate(
         user.role === "ADMIN" ? "/admin/dashboard" : "/shopkeeper/dashboard"
       );
@@ -62,12 +60,12 @@ const Login = () => {
       setError("");
       setLoading(true);
       await authService.signup({
-        username: formData.username,
-        password: formData.password,
+        username: signupData.username,
+        password: signupData.password,
         role: "SHOPKEEPER",
       });
-      setSignIn(true);
-      setFormData({ username: "", password: "", role: "ADMIN" });
+      setIsSignIn(true);
+      setSignupData({ username: "", password: "" });
     } catch (err) {
       setError("Failed to create account");
     } finally {
@@ -78,77 +76,88 @@ const Login = () => {
   return (
     <Container>
       <MainContainer>
-        <SignInContainer signingIn={signIn}>
-          <Form onSubmit={handleSignIn}>
-            <Title>Sign In</Title>
-            {error && <div className="error-message">{error}</div>}
-            <Input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-            <Select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              required
-            >
-              <option value="ADMIN">Admin</option>
-              <option value="SHOPKEEPER">Shopkeeper</option>
-            </Select>
-            <Button type="submit" disabled={loading}>
-              Sign In
-            </Button>
-          </Form>
-        </SignInContainer>
-
-        <SignUpContainer signingIn={signIn}>
+        <SignUpContainer signingIn={isSignIn}>
           <Form onSubmit={handleSignUp}>
-            <Title>Create Account</Title>
+            <Title white={isSignIn}>Create Account</Title>
             {error && <div className="error-message">{error}</div>}
             <Input
+              white={isSignIn}
               type="text"
-              name="username"
               placeholder="Username"
-              value={formData.username}
-              onChange={handleChange}
-              required
+              value={signupData.username}
+              onChange={(e) =>
+                setSignupData({ ...signupData, username: e.target.value })
+              }
             />
             <Input
+              white={isSignIn}
               type="password"
-              name="password"
               placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
+              value={signupData.password}
+              onChange={(e) =>
+                setSignupData({ ...signupData, password: e.target.value })
+              }
             />
-            <Button type="submit" disabled={loading}>
+            <Button white={isSignIn} type="submit" disabled={loading}>
               Sign Up
             </Button>
           </Form>
         </SignUpContainer>
 
-        <OverlayContainer signingIn={signIn}>
-          <Overlay signingIn={signIn}>
-            <LeftOverlayPanel signingIn={signIn}>
-              <Title>Welcome Back!</Title>
-              <GhostButton onClick={() => setSignIn(true)}>Sign In</GhostButton>
+        <SignInContainer signingIn={isSignIn}>
+          <Form onSubmit={handleSignIn}>
+            <Title white={!isSignIn}>Sign In</Title>
+            {error && <div className="error-message">{error}</div>}
+            <Input
+              white={!isSignIn}
+              type="text"
+              placeholder="Username"
+              value={loginData.username}
+              onChange={(e) =>
+                setLoginData({ ...loginData, username: e.target.value })
+              }
+            />
+            <Input
+              white={!isSignIn}
+              type="password"
+              placeholder="Password"
+              value={loginData.password}
+              onChange={(e) =>
+                setLoginData({ ...loginData, password: e.target.value })
+              }
+            />
+            <Select
+              white={!isSignIn}
+              value={loginData.role}
+              onChange={(e) =>
+                setLoginData({ ...loginData, role: e.target.value })
+              }
+            >
+              <option value="SHOPKEEPER">Shopkeeper</option>
+              <option value="ADMIN">Admin</option>
+            </Select>
+            <Button white={!isSignIn} type="submit" disabled={loading}>
+              Sign In
+            </Button>
+          </Form>
+        </SignInContainer>
+
+        <OverlayContainer signingIn={isSignIn}>
+          <Overlay signingIn={isSignIn}>
+            <LeftOverlayPanel signingIn={isSignIn}>
+              <Title white>Welcome Back!</Title>
+              <OverlayText>Please login with your personal info</OverlayText>
+              <GhostButton onClick={() => setIsSignIn(true)}>
+                Sign In
+              </GhostButton>
             </LeftOverlayPanel>
 
-            <RightOverlayPanel signingIn={signIn}>
-              <Title>Hello, Friend!</Title>
-              <GhostButton onClick={() => setSignIn(false)}>
+            <RightOverlayPanel signingIn={isSignIn}>
+              <Title white>Hello, Friend!</Title>
+              <OverlayText>
+                Enter your details and start journey with us
+              </OverlayText>
+              <GhostButton onClick={() => setIsSignIn(false)}>
                 Sign Up
               </GhostButton>
             </RightOverlayPanel>

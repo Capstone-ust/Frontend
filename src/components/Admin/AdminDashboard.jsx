@@ -1,96 +1,104 @@
 import { useState, useEffect } from "react";
-import { orderService } from "../../services/api";
-import { Bar } from "react-chartjs-2";
+import { storeService, orderService, authService } from "../../services/api";
+import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
+  LineElement,
+  PointElement,
   Title,
   Tooltip,
   Legend,
 } from "chart.js";
 import "./AdminDashboard.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBox,
+  faStore,
+  faCoins,
+  faUsers,
+  faShoppingCart,
+  faExclamationCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  LineElement,
+  PointElement,
   Title,
   Tooltip,
   Legend
 );
 
 const AdminDashboard = () => {
-  const [salesData, setSalesData] = useState(null);
+  const [dashboardData, setDashboardData] = useState({
+    users: [],
+    stores: [],
+    orders: [],
+    revenue: [],
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [timeRange, setTimeRange] = useState("weekly");
 
   useEffect(() => {
     fetchDashboardData();
-  }, []);
+  }, [timeRange]);
 
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      // Changed from getAll to getAllOrders
-      const orders = await orderService.getAllOrders();
-      console.log("Fetched orders:", orders);
+      const [users, stores, orders] = await Promise.all([
+        authService.getAllUsers(),
+        storeService.getAll(),
+        orderService.getAllOrders(),
+      ]);
 
-      if (!Array.isArray(orders)) {
-        throw new Error("Invalid orders data received");
-      }
-
-      // Process orders to get category-wise sales
-      const categorySales = orders.reduce((acc, order) => {
-        if (!order.items) {
-          console.log("No items in order:", order.id);
-          return acc;
-        }
-
-        order.items.forEach((item) => {
-          if (item.category) {
-            acc[item.category] =
-              (acc[item.category] || 0) + (item.quantity || 0);
-          }
-        });
-        return acc;
-      }, {});
-
-      console.log("Processed sales data:", categorySales);
-      setSalesData(categorySales);
+      setDashboardData({
+        users,
+        stores,
+        orders,
+        revenue: calculateRevenue(orders),
+      });
+      setError(null);
     } catch (err) {
       console.error("Error fetching dashboard data:", err);
-      setError("Failed to fetch dashboard data");
+      setError("Failed to load dashboard data");
     } finally {
       setLoading(false);
     }
   };
 
+  const calculateRevenue = (orders) => {
+    return orders.reduce((acc, order) => {
+      const date = new Date(order.createdAt).toLocaleDateString();
+      const revenue = order.items.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+
+      const existingEntry = acc.find((entry) => entry.date === date);
+      if (existingEntry) {
+        existingEntry.amount += revenue;
+      } else {
+        acc.push({ date, amount: revenue });
+      }
+      return acc;
+    }, []);
+  };
+
   const chartData = {
-    labels: salesData ? Object.keys(salesData) : [],
+    labels: dashboardData.revenue.map((item) => item.date),
     datasets: [
       {
-        label: "Total Products Sold",
-        data: salesData ? Object.values(salesData) : [],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.5)",
-          "rgba(54, 162, 235, 0.5)",
-          "rgba(255, 206, 86, 0.5)",
-          "rgba(75, 192, 192, 0.5)",
-          "rgba(153, 102, 255, 0.5)",
-          "rgba(255, 159, 64, 0.5)",
-          "rgba(76, 175, 80, 0.5)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-          "rgba(76, 175, 80, 1)",
-        ],
+        label: "Revenue",
+        data: dashboardData.revenue.map((item) => item.amount),
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        borderColor: "rgb(53, 162, 235)",
         borderWidth: 1,
       },
     ],
@@ -104,28 +112,9 @@ const AdminDashboard = () => {
       },
       title: {
         display: true,
-        text: "Overall Category-wise Sales",
-        font: {
-          size: 16,
-        },
+        text: "Revenue Overview",
       },
     },
-    scales: {
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: "Number of Products",
-        },
-      },
-      x: {
-        title: {
-          display: true,
-          text: "Categories",
-        },
-      },
-    },
-    maintainAspectRatio: false,
   };
 
   if (loading) return <div className="loading">Loading dashboard data...</div>;
@@ -135,17 +124,73 @@ const AdminDashboard = () => {
     <div className="admin-dashboard">
       <div className="dashboard-header">
         <h1>Admin Dashboard</h1>
+        <select
+          value={timeRange}
+          onChange={(e) => setTimeRange(e.target.value)}
+          className="time-range-selector"
+        >
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
       </div>
 
-      <div className="stats-container">
-        <div className="chart-card">
-          <div className="chart-container">
-            {salesData && Object.keys(salesData).length > 0 ? (
-              <Bar data={chartData} options={chartOptions} />
-            ) : (
-              <div className="no-data-message">No sales data available yet</div>
-            )}
+      <div className="summary-cards">
+        <div className="summary-card">
+          <div className="card-icon products">
+            <FontAwesomeIcon icon={faBox} />
           </div>
+          <div className="card-info">
+            <h3>Total Products</h3>
+            <p className="card-value">{dashboardData.products}</p>
+          </div>
+        </div>
+
+        <div className="summary-card">
+          <div className="card-icon stores">
+            <FontAwesomeIcon icon={faStore} />
+          </div>
+          <div className="card-info">
+            <h3>Total Stores</h3>
+            <p className="card-value">{dashboardData.stores}</p>
+          </div>
+        </div>
+
+        <div className="summary-card">
+          <div className="card-icon revenue">
+            <FontAwesomeIcon icon={faCoins} />
+          </div>
+          <div className="card-info">
+            <h3>Total Revenue</h3>
+            <p className="card-value">${dashboardData.revenue}</p>
+          </div>
+        </div>
+
+        <div className="summary-card">
+          <div className="card-icon users">
+            <FontAwesomeIcon icon={faUsers} />
+          </div>
+          <div className="card-info">
+            <h3>Total Users</h3>
+            <p className="card-value">{dashboardData.users}</p>
+          </div>
+        </div>
+
+        <div className="summary-card">
+          <div className="card-icon orders">
+            <FontAwesomeIcon icon={faShoppingCart} />
+          </div>
+          <div className="card-info">
+            <h3>Total Orders</h3>
+            <p className="card-value">{dashboardData.orders}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="charts-grid">
+        <div className="chart-card">
+          <h2>Revenue Overview</h2>
+          <Bar data={chartData} options={chartOptions} />
         </div>
       </div>
     </div>
